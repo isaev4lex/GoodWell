@@ -1,0 +1,140 @@
+{% load static %}
+{% if lang == 'ru' %}
+  <footer class="footer">
+    <div class="container-lg">
+      <div class="footer-inner">
+        <div class="footer-logo">
+          <a href="{% url 'home' %}">
+            <img src="{% static '/img/logo-blue.webp' %}" alt="Логотип" />
+          </a>
+        </div>
+        <div class="footer-main">
+          <div class="footer-title">Главная</div>
+          <ul class="footer-list">
+            <li class="footer-list-item">
+<!--              <a href="">Продукция</a>-->
+            </li>
+            <li class="footer-list-item">
+              <a href="{% url 'services' %}">Услуги</a>
+            </li>
+            <li class="footer-list-item">
+              <a href="{% url 'partners' %}">Нам доверяют</a>
+            </li>
+            <li class="footer-list-item">
+              <a href="{% url 'contacts' %}">Контакты</a>
+            </li>
+            <li class="footer-list-item">
+              <a href="{% url 'about' %}">О нас</a>
+            </li>
+          </ul>
+        </div>
+<!--        <div class="footer-site">-->
+<!--          <div class="footer-title">Сайт</div>-->
+<!--          <ul class="footer-list">-->
+<!--            <li class="footer-list-item">-->
+<!--              <a href="#">Карта сайта</a>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+        <div class="footer-contacts">
+          <div class="footer-title">Контакты</div>
+          <ul class="footer-list">
+            <li class="footer-list-item">
+              {% for address in contact_info.addresses %}
+                {{ address.city }}, {{ address.street }}
+                {% if address.landmark %}
+                  Ориентир: {{ address.landmark }}
+                {% endif %}
+              {% endfor %}
+            </li>
+            <li class="footer-list-item">
+              Контактные номера:
+            </li>
+            {% for phone in contact_info.phones %}
+              <li class="footer-list-item">
+                <a href="tel:{{ phone.phone_number }}">{{ phone.phone_number }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+{% else %}
+  <footer class="footer">
+    <div class="container-lg">
+      <div class="footer-inner">
+        <div class="footer-logo">
+          <a href="{% url 'home' 'uz' %}">
+            <img src="{% static '/img/logo-blue.webp' %}" alt="Логотип" />
+          </a>
+        </div>
+        <div class="footer-main">
+          <div class="footer-title">Bosh sahifa</div>
+          <ul class="footer-list">
+            <li class="footer-list-item">
+<!--              <a href="">Mahsulotlar</a>-->
+            </li>
+            <li class="footer-list-item">
+              <a href="{% url 'services' 'uz' %}">Xizmatlar</a>
+            </li>
+            <li class="footer-list-item">
+              <a href="{% url 'partners' 'uz' %}">Bizga ishonch</a>
+            </li>
+            <li class="footer-list-item">
+              <a href="{% url 'contacts' 'uz' %}">Kontaktlar</a>
+            </li>
+            <li class="footer-list-item">
+              <a href="{% url 'about' 'uz' %}">Kompaniyamiz haqida</a>
+            </li>
+          </ul>
+        </div>
+<!--        <div class="footer-site">-->
+<!--          <div class="footer-title">Сайт</div>-->
+<!--          <ul class="footer-list">-->
+<!--            <li class="footer-list-item">-->
+<!--              <a href="#">Карта сайта</a>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+        <div class="footer-contacts">
+          <div class="footer-title">Kontaktlar</div>
+          <ul class="footer-list">
+            <li class="footer-list-item">
+              {% for address in contact_info.addresses %}
+                {{ address.city }}, {{ address.street }}
+                {% if address.landmark %}
+                  Mo'ljal: {{ address.landmark }}
+                {% endif %}
+              {% endfor %}
+            </li>
+            <li class="footer-list-item">
+              Telefon raqami:
+            </li>
+            {% for phone in contact_info.phones %}
+              <li class="footer-list-item">
+                <a href="tel:{{ phone.phone_number }}">{{ phone.phone_number }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+<div class="footer-dev" style="padding: 8px 0; background-color: #e8e8e8">
+  <div
+    class="footer-dev-inner"
+    style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: grey;
+          "
+  >
+    Crafted by &nbsp
+    <a href="https://220studio.uz/" target="_blank" style="color: grey">
+      220Studio.uz
+    </a>
+  </div>
+</div>
+{% endif %}

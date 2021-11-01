@@ -1,0 +1,666 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  {% if lang == 'ru' %}
+    {% for meta_tag in meta %}
+      <title>{{ meta_tag.title }}</title>
+      <meta name="description" content="{{ meta_tag.description }}" />
+      <meta name="keywords" content="{{ meta_tag.keywords }}" />
+    {% endfor %}
+    {% for html_tag in head_tags %}
+      {% autoescape off %} {{ html_tag.tag }}{% endautoescape %}
+    {% endfor %}
+  {% else %}
+    {% for meta_tag in meta %}
+      <title>{{ meta_tag.title_uz }}</title>
+      <meta name="description" content="{{ meta_tag.description }}" />
+      <meta name="keywords" content="{{ meta_tag.keywords }}" />
+    {% endfor %}
+    {% for html_tag in head_tags %}
+      {% autoescape off %} {{ html_tag.tag }}{% endautoescape %}
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static '/css/style.min.css' %}" />
+{% endblock %}
+{% block content %}
+  {% if success_sent %}
+    {% include 'modal_confirm.html' %}
+  {% endif %}
+  {% include 'header.html' %}
+    {% if lang == 'ru' %}
+      {% for product_array in products %}
+        {% for product in product_array %}
+          {% if product.slug == slug %}
+            <main class="main">
+              {% if product.category.slug == 'paints' %}
+                <div class="product">
+                  <div class="container-lg">
+                    <div class="product-window">
+                      <div class="product-preview">
+                        <div class="product-preview-img">
+                          <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                        </div>
+                      </div>
+                      <div class="product-desc">
+                        <div class="product-desc-top">
+                          <div class="product-desc-title">
+                            {{ product.title }}
+                          </div>
+                          <div class="product-desc-price">
+                            Цена: <span>{{ product.price }} сум</span>
+                          </div>
+                        </div>
+                        <div class="product-info">
+                          {% if paint_temp_from and paint_temp_to %}
+                            <div class="product-info-item">
+                              <div class="product-info-title">
+                                Температура применения краски
+                              </div>
+                              <div class="product-info-desc">
+                                От {{ product.paint_temp_from }} до {{ product.paint_temp_to }}
+                              </div>
+                            </div>
+                          {% endif %}
+                          {% if usage_temp_from and usage_temp_to %}
+                            <div class="product-info-item">
+                              <div class="product-info-title">
+                                Температура эксплутации покрытия
+                              </div>
+                              <div class="product-info-desc">
+                                От {{ product.usage_temp_from }} до {{ product.usage_temp_to }}
+                              </div>
+                            </div>
+                          {% endif %}
+                          {% if product.service_life %}
+                            <div class="product-info-item">
+                              <div class="product-info-title">Срок эксплутации</div>
+                              <div class="product-info-desc">не менее {{ product.service_life }} лет*</div>
+                            </div>
+                          {% endif %}
+                          {% if product.packaging %}
+                            <div class="product-info-item">
+                              <div class="product-info-title">Упаковка</div>
+                              <div class="product-info-desc">{{ product.packaging }}</div>
+                            </div>
+                          {% endif %}
+                          {% if product.color %}
+                            <div class="product-info-item">
+                              <div class="product-info-title">Цвет</div>
+                              <div class="product-info-desc">{{ product.color }}</div>
+                            </div>
+                          {% endif %}
+                          {% if product.made_in %}
+                            <div class="product-info-item">
+                              <div class="product-info-title">Страна производитель</div>
+                              <div class="product-info-desc">{{ product.made_in }}</div>
+                            </div>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <div class="characteristics">
+                    <div class="container-lg">
+                      <div class="characteristics-title">Технические характеристики</div>
+                      <div class="characteristics-inner">
+                        <div class="characteristics-item">
+                          <div class="characteristics-item-title">
+                            Группа огнезащитной эффективности
+                          </div>
+                          <div class="characteristics-info">
+                            {% for info in technic_info %}
+                              {% if info.for_product_info.title == product.title %}
+                                <div class="characteristics-info-desc">
+                                  Группа {{ info.fire_resistant_efficiency_group }} ({{ info.fire_resistant_efficiency_min }} минут)
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                        <div class="characteristics-item">
+                          <div class="characteristics-item-title">
+                            Приведенная толщина металла, мм
+                          </div>
+                          <div class="characteristics-info">
+                            {% for info in technic_info %}
+                              {% if info.for_product_info.title == product.title %}
+                                <div class="characteristics-info-desc">
+                                  {{ info.reduced_thickness}}
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                        <div class="characteristics-item">
+                          <div class="characteristics-item-title">
+                            Толщина сухого слоя краски, мм
+                          </div>
+                          <div class="characteristics-info">
+                            {% for info in technic_info %}
+                              {% if info.for_product_info.title == product.title %}
+                                <div class="characteristics-info-desc">
+                                  {{ info.dry_thickness_paint_layer }}
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                        <div class="characteristics-item">
+                          <div class="characteristics-item-title">
+                            Теоретический расход краски, кг/м
+                          </div>
+                          <div class="characteristics-info">
+                            {% for info in technic_info %}
+                              {% if info.for_product_info.title == product.title %}
+                                <div class="characteristics-info-desc">
+                                  {{ info.consumption_paint }}
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                {% if product.usage_description %}
+                  <div class="description">
+                    <div class="container-lg">
+                      <div class="description-inner">
+                        <div class="description-item">
+                          <div class="description-title">
+                            Особенности применения и эксплуатации
+                          </div>
+                          <div class="description-text">
+                            <p>
+                              {% autoescape off %}
+                                {{ product.usage_description }}
+                              {% endautoescape %}
+                            </p>
+                          </div>
+                        </div>
+                        {% if product.how_to_save_description %}
+                          <div class="description-item">
+                            <div class="description-title">
+                              Условия транспортирования и хранения.
+                            </div>
+                            <div class="description-text">
+                              <p>
+                                {% autoescape off %}
+                                  {{ product.how_to_save_description }}
+                                {% endautoescape %}
+                              </p>
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                {% elif product.category.slug == 'mixes' %}
+                  <div class="product">
+                    <div class="container-lg">
+                      <div class="product-window">
+                        <div class="product-preview">
+                          <div class="product-preview-img">
+                            <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                          </div>
+                        </div>
+                        <div class="product-desc">
+                          <div class="product-desc-top">
+                            <div class="product-desc-title">
+                              {{ product.title }}
+                            </div>
+                            <div class="product-desc-price">
+                              Цена: <span>{{ product.price }} сум</span>
+                            </div>
+                          </div>
+                          <div class="product-info">
+                            {% if product.first_group %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Первая группа огнезащитной эффективности. Расход не менее
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.first_group }}
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% if product.second_group %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Вторая группа огнезащитной эффективности. Расход не менее
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.second_group }}
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% if product.temp_usage_from %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Температура использования ОТ
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.temp_usage_from }}
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% if product.temp_usage_to %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Температура использования ДО
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.temp_usage_to }}
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% if product.usage_without_lost %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Расход без учёта потерь (МЛ)
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.usage_without_lost }}
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% if product.packaging %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Об упаковке
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.packaging }}
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% if product.ready_time %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Сохнет
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.ready_time }} часов
+                                </div>
+                              </div>
+                            {% endif %}
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% elif product.category.slug == 'tubes' %}
+                  <div class="product">
+                    <div class="container-lg">
+                      <div class="product-window">
+                        <div class="product-preview">
+                          <div class="product-preview-img">
+                            <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                          </div>
+                        </div>
+                        <div class="product-desc">
+                          <div class="product-desc-top">
+                            <div class="product-desc-title">
+                              {{ product.title }}
+                            </div>
+                            <div class="product-desc-price">
+                              Цена: <span>{{ product.price }} сум</span>
+                            </div>
+                          </div>
+                         
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="characteristics">
+                    <div class="container-lg">
+                      <div class="characteristics-title">Технические характеристики</div>
+                      <div class="characteristics-inner">
+                        <div class="characteristics-item">
+                          <div class="characteristics-item-title">
+                            Наименование
+                          </div>
+                          <div class="characteristics-info">
+                            {% for info in technic_tubes_info %}
+                              {% if info.for_product_info.slug == product.slug %}
+                                <div class="characteristics-info-desc">
+                                  {{ info.naming }}
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                        <div class="characteristics-item">
+                          <div class="characteristics-item-title">
+                            D,mm
+                          </div>
+                          <div class="characteristics-info">
+                            {% for info in technic_tubes_info %}
+                              {% if info.for_product_info.slug == product.slug %}
+                                <div class="characteristics-info-desc">
+                                  {{ info.diameter }}
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                        <div class="characteristics-item">
+                          <div class="characteristics-item-title">
+                            S,mm
+                          </div>
+                          <div class="characteristics-info">
+                            {% for info in technic_tubes_info %}
+                              {% if info.for_product_info.slug == product.slug %}
+                                <div class="characteristics-info-desc">
+                                  {{ info.square }}
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                        <div class="characteristics-item">
+                          <div class="characteristics-item-title">
+                            Вес
+                          </div>
+                          <div class="characteristics-info">
+                            {% for info in technic_tubes_info %}
+                              {% if info.for_product_info.slug == product.slug %}
+                                <div class="characteristics-info-desc">
+                                  {{ info.weight }}
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                {% endif %}
+                {% include 'feedback.html' %}
+              </div>
+            </main>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    {% elif lang == 'uz' %}
+      {% for product_array in products %}
+        {% for product in product_array %}
+          {% if product.slug == slug %}
+            <main class="main">
+              {% if product.category.slug == 'paints' %}
+                <div class="product">
+                  <div class="container-lg">
+                    <div class="product-window">
+                      <div class="product-preview">
+                        <div class="product-preview-img">
+                          <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                        </div>
+                      </div>
+                      <div class="product-desc">
+                        <div class="product-desc-top">
+                          <div class="product-desc-title">
+                            {{ product.title_uz }}
+                          </div>
+                          <div class="product-desc-price">
+                            Narxi: <span>{{ product.price }} so'm</span>
+                          </div>
+                        </div>
+                        <div class="product-info">
+                          {% if paint_temp_from and paint_temp_to %}
+                            <div class="product-info-item">
+                              <div class="product-info-title">
+                                Bo'yoqni qo'llash harorati
+                              </div>
+                              <div class="product-info-desc">
+                                {{ product.paint_temp_from }} - {{ product.paint_temp_to }}
+                              </div>
+                            </div>
+                          {% endif %}
+                          {% if usage_temp_from and usage_temp_to %}
+                            <div class="product-info-item">
+                              <div class="product-info-title">
+                                Qoplama ish harorati
+                              </div>
+                              <div class="product-info-desc">
+                                {{ product.usage_temp_from }} - {{ product.usage_temp_to }}
+                              </div>
+                            </div>
+                          {% endif %}
+                          {% if product.service_life %}
+                            <div class="product-info-item">
+                              <div class="product-info-title">Foydalanish muddati</div>
+                              <div class="product-info-desc">{{ product.service_life }} yildan kam emas</div>
+                            </div>
+                          {% endif %}
+                          {% if product.packaging %}
+                            <div class="product-info-item">
+                              <div class="product-info-title">Qadoq</div>
+                              <div class="product-info-desc">{{ product.packaging }}</div>
+                            </div>
+                          {% endif %}
+                          {% if product.color %}
+                            <div class="product-info-item">
+                              <div class="product-info-title">Rangi
+                              </div>
+                              <div class="product-info-desc">{{ product.color_uz }}</div>
+                            </div>
+                          {% endif %}
+                          {% if product.made_in %}
+                            <div class="product-info-item">
+                              <div class="product-info-title">Ishlab chiqaruvchi mamlakat</div>
+                              <div class="product-info-desc">{{ product.made_in_uz }}</div>
+                            </div>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <div class="characteristics">
+                    <div class="container-lg">
+                      <div class="characteristics-title">Xususiyatlar</div>
+                      <div class="characteristics-inner">
+                        <div class="characteristics-item">
+                          <div class="characteristics-item-title">
+                            Yong'inga qarshi samaradorlik guruhi
+                          </div>
+                          <div class="characteristics-info">
+                            {% for info in technic_info %}
+                              {% if info.for_product_info.title == product.title %}
+                                <div class="characteristics-info-desc">
+                                  {{ info.fire_resistant_efficiency_group }} - guruh ({{ info.fire_resistant_efficiency_min }} daqiqa)
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                        <div class="characteristics-item">
+                          <div class="characteristics-item-title">
+                            Metall qalinligining pasayishi, mm
+                          </div>
+                          <div class="characteristics-info">
+                            {% for info in technic_info %}
+                              {% if info.for_product_info.title == product.title %}
+                                <div class="characteristics-info-desc">
+                                  {{ info.reduced_thickness}}
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                        <div class="characteristics-item">
+                          <div class="characteristics-item-title">
+                            Quruq bo'yoq qalinligi, mm
+                          </div>
+                          <div class="characteristics-info">
+                            {% for info in technic_info %}
+                              {% if info.for_product_info.title == product.title %}
+                                <div class="characteristics-info-desc">
+                                  {{ info.dry_thickness_paint_layer }}
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                        <div class="characteristics-item">
+                          <div class="characteristics-item-title">
+                            Nazariy bo'yoq sarfi, kg/m
+                          </div>
+                          <div class="characteristics-info">
+                            {% for info in technic_info %}
+                              {% if info.for_product_info.title == product.title %}
+                                <div class="characteristics-info-desc">
+                                  {{ info.consumption_paint }}
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                {% if product.usage_description %}
+                  <div class="description">
+                    <div class="container-lg">
+                      <div class="description-inner">
+                        <div class="description-item">
+                          <div class="description-title">
+                            Qo'llash va ishlatish xususiyatlari
+                          </div>
+                          <div class="description-text">
+                            <p>
+                              {% autoescape off %}
+                                {{ product.usage_description_uz }}
+                              {% endautoescape %}
+                            </p>
+                          </div>
+                        </div>
+                        {% if product.how_to_save_description %}
+                          <div class="description-item">
+                            <div class="description-title">
+                              Tashish va saqlash shartlari.
+                            </div>
+                            <div class="description-text">
+                              <p>
+                                {% autoescape off %}
+                                  {{ product.how_to_save_description_uz }}
+                                {% endautoescape %}
+                              </p>
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                {% elif product.category.slug == 'mixes' %}
+                  <div class="product">
+                    <div class="container-lg">
+                      <div class="product-window">
+                        <div class="product-preview">
+                          <div class="product-preview-img">
+                            <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                          </div>
+                        </div>
+                        <div class="product-desc">
+                          <div class="product-desc-top">
+                            <div class="product-desc-title">
+                              {{ product.title_uz }}
+                            </div>
+                            <div class="product-desc-price">
+                              Narxi: <span>{{ product.price }} so'm</span>
+                            </div>
+                          </div>
+                          <div class="product-info">
+                            {% if product.first_group %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Yongʻinga qarshi samardorlikning birinchi guruhi. Iste’mol:
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.first_group }} dan kam emas
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% if product.second_group %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Yongʻinga qarshi samardorlikning ikkinchi guruhi. Iste’mol:
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.second_group }} dan kam emas
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% if product.temp_usage_from %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Foydalanish harorati
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.temp_usage_from }} dan
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% if product.temp_usage_to %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Foydalanish harorati
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.temp_usage_to }} gacha
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% if product.usage_without_lost %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Yoʻqotishlarni hisobga olmagan holda iste’mol (ML) 
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.usage_without_lost }}
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% if product.packaging %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Qadoq
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.packaging }}
+                                </div>
+                              </div>
+                            {% endif %}
+                            {% if product.ready_time %}
+                              <div class="product-info-item">
+                                <div class="product-info-title">
+                                  Qurish vaqti
+                                </div>
+                                <div class="product-info-desc">
+                                  {{ product.ready_time }} soatda
+                                </div>
+                              </div>
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+                {% include 'feedback.html' %}
+              </div>
+            </main>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    {% endif %}
+  {% include 'footer.html' %}
+{% endblock %}
+{% block scripts %}
+  <script src="{% static '/js/script.js' %}"></script>
+{% endblock %}

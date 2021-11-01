@@ -1,0 +1,111 @@
+{% load static %}
+{% if lang == 'ru' %}
+<div class="hamburger-menu">
+              <input id="menu__toggle" type="checkbox" />
+              <label class="menu__btn" for="menu__toggle">
+                <span></span>
+              </label>
+              <ul class="menu__box">
+                <li><a class="menu__item" href="{% url 'home' %}">Главная</a></li>
+                <li>
+                  <a class="menu__item" id="products" href="#"
+                    >Продукция <img src="{% static '/img/icons/down-arrow.svg' %}" alt="" />
+                  </a>
+                  <ul class="submenu-mobile">
+                    <li>
+                      <a href="{% url 'categories' 'paints' %}" class="submenu-mobile-link">
+                        Огнезащитные краски
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'categories' 'mixes' %}" class="submenu-mobile-link">
+                        Огнезащитные составы
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'categories' 'tubes' %}" class="submenu-mobile-link">
+                        Трубы и фитинги
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'categories' 'alarms' %}" class="submenu-mobile-link"> Оборудование </a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="menu__item" href="{% url 'services' %}">Услуги</a></li>
+                <li>
+                  <a class="menu__item" href="{% url 'partners' %}">Нам доверяют</a>
+                </li>
+                <li>
+                  <a class="menu__item" href="{% url 'contacts' %}">Контакты</a>
+                </li>
+                <li>
+                  <a class="menu__item" href="{% url 'about' %}">О Компании</a>
+                </li>
+                <li class="submenu-mobile-lang">
+                  {% if slug %}
+                    <a href="{% url page slug %}" class="menu__item submenu-mobile-lang-active">ru</a>
+                    <a href="{% url page slug 'uz' %}" class="menu__item">uz</a>
+                  {% else %}
+                    <a href="{% url page %}" class="menu__item submenu-mobile-lang-active">ru</a>
+                    <a href="{% url page 'uz' %}" class="menu__item">uz</a>
+                  {% endif %}
+                </li>
+              </ul>
+            </div>
+{% elif lang == 'uz' %}
+<div class="hamburger-menu">
+              <input id="menu__toggle" type="checkbox" />
+              <label class="menu__btn" for="menu__toggle">
+                <span></span>
+              </label>
+              <ul class="menu__box">
+                <li><a class="menu__item" href="{% url 'home' 'uz' %}">Bosh sahifa</a></li>
+                <li>
+                  <a class="menu__item" id="products" href="#"
+                    >Xizmatlar <img src="{% static '/img/icons/down-arrow.svg' %}" alt="" />
+                  </a>
+                  <ul class="submenu-mobile">
+                    <li>
+                      <a href="{% url 'categories' 'paints' 'uz' %}" class="submenu-mobile-link">
+                        Yong'indan saqlaydigan bo'yoqlar
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'categories' 'mixes' 'uz' %}" class="submenu-mobile-link">
+                        Yongʻindan saqlaydigan moddalar
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'categories' 'tubes' 'uz' %}" class="submenu-mobile-link">
+                        Quvurlar va fitinglar
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'categories' 'alarms' 'uz' %}" class="submenu-mobile-link"> Uskinalar </a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="menu__item" href="{% url 'services' 'uz' %}">Xizmatlar</a></li>
+                <li>
+                  <a class="menu__item" href="{% url 'partners' 'uz' %}">Bizning xamkorlarimiz</a>
+                </li>
+                <li>
+                  <a class="menu__item" href="{% url 'contacts' 'uz' %}">Kontaktlar</a>
+                </li>
+                <li>
+                  <a class="menu__item" href="{% url 'about' 'uz' %}">Kompaniyamiz haqida</a>
+                </li>
+                <li class="submenu-mobile-lang">
+                  {% if slug %}
+                    <a href="{% url page slug %}" class="menu__item">ru</a>
+                    <a href="{% url page slug 'uz' %}" class="menu__item submenu-mobile-lang-active">uz</a>
+                  {% else %}
+                    <a href="{% url page %}" class="menu__item">ru</a>
+                    <a href="{% url page 'uz' %}" class="menu__item submenu-mobile-lang-active">uz</a>
+                  {% endif %}
+                </li>
+              </ul>
+            </div>
+
+{% endif %}

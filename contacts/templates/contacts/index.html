@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  {% if lang == 'ru' %}
+    {% for meta_tag in meta %}
+      <title>{{ meta_tag.title }}</title>
+      <meta name="description" content="{{ meta_tag.description }}" />
+      <meta name="keywords" content="{{ meta_tag.keywords }}" />
+    {% endfor %}
+    {% for html_tag in head_tags %}
+      {% autoescape off %} {{ html_tag.tag }}{% endautoescape %}
+    {% endfor %}
+  {% else %}
+    {% for meta_tag in meta %}
+      <title>{{ meta_tag.title_uz }}</title>
+      <meta name="description" content="{{ meta_tag.description }}" />
+      <meta name="keywords" content="{{ meta_tag.keywords }}" />
+    {% endfor %}
+    {% for html_tag in head_tags %}
+      {% autoescape off %} {{ html_tag.tag }}{% endautoescape %}
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static '/css/style.min.css' %}" />
+{% endblock %}
+{% block content %}
+  {% if success_sent %}
+    {% include 'modal_confirm.html' %}
+  {% endif %}
+  {% include 'header.html' %}
+  <main class="main">
+    <div class="contactus">
+      <div class="container-md">
+        <div class="contact-inner">
+          <div class="contactus-title">Свяжитесь с нами</div>
+          <div class="contactus-info">
+            <div class="contactus-item">
+              <div class="contactus-icon">
+                <img src="{% static '/img/icons/location.webp' %}" alt="" />
+              </div>
+              <div class="contactus-desc">
+                Адрес:
+                {% for address in contact_info.addresses %}
+                  {{ address.city }}, {{ address.street }}
+                  {% if address.landmark %}
+                    Ориентир: {{ address.landmark }}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="contactus-item">
+              <div class="contactus-icon">
+                <img src="{% static '/img/icons/phone-lg.webp' %}" alt="" />
+              </div>
+
+              {% for phone in contact_info.phones %}
+                <a href="tel:{{ phone.phone_number }}" class="contactus-desc">{{ phone.phone_number }}</a>
+              {% endfor %}
+            </div>
+            <div class="contactus-item">
+              <div class="contactus-icon">
+                <img src="{% static '/img/icons/message.webp' %}" alt="" />
+              </div>
+
+              {% for email in contact_info.emails %}
+                <a href="mailto:{{ email.email }}" class="contactus-desc">{{ email.email }}</a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include 'feedback.html' %}
+  </main>
+  {% include 'footer.html' %}
+{% endblock %}
+{% block scripts %}
+    <script src="{% static '/js/script.js' %}"></script>
+    <script src="{% static '/js/swiper-bundle.min.js' %}"></script>
+{% endblock %}

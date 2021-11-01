@@ -1,0 +1,58 @@
+.slider
+  margin: 50px 0
+
+.swiper
+  &-container
+    width: 100%
+    border-radius: 1.25em
+    height: 420px
+    position: relative
+  &-wrapper
+    width: 100%
+  &-slide
+    display: flex
+    justify-content: flex-end
+    border-radius: 1.25em
+    overflow: hidden
+    height: 420px
+    &-banner
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      z-index: -1
+  &-desc
+    padding: 30px 90px
+    width: 100%
+    max-width: 730px
+    height: 100%
+    z-index: 1
+    &-title
+      color: #05658F
+      font-weight: 700
+      font-size: 40px
+      margin-bottom: 14px
+    &-info
+      color: #05658F
+      font-size: 16px
+      margin-bottom: 20px
+  &-pagination
+    display: inline-flex
+    justify-content: space-between
+    background-color: #E9E6E6
+    padding: 3px
+    border-radius: 100px
+    width: 100%
+    max-width: 76px
+    position: absolute
+    bottom: 20px
+    right: 40px
+
+.dots
+  width: 18px
+  height: 18px
+  background-color: #fff
+  border-radius: 50%
+  &-active
+    background-color: #3C5CCD

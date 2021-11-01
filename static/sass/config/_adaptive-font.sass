@@ -1,0 +1,8 @@
+$maxWidth: 1690
+@mixin adaptiv-font($pcSize, $mobSize) 
+ $addSize: $pcSize - $mobSize;
+ $maxWidth: $maxWidth - 320;
+ font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth}));
+
+// что бы исползовать этот стиль нужно прописать: @include adaptiv-font(70, 10)
+// $maxWidth: это размер ограничевающего контейнера

@@ -1,0 +1,30 @@
+{% load static %}
+{% if lang == 'ru' %}
+  <div class="success">
+    <div class="success-overlay">
+      <div class="success-window">
+        <div class="success-title">Сообщение успешно отправлено !</div>
+        <div class="btn btn-center">
+          <a href="{% url page %}">
+            Вернуться назад
+            <img src="{% static '/img/icons/right.svg' %}" alt="Перейти" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="success">
+    <div class="success-overlay">
+      <div class="success-window">
+        <div class="success-title">Сообщение успешно отправлено !</div>
+        <div class="btn btn-center">
+          <a href="{% url page 'uz' %}">
+            Вернуться назад
+            <img src="{% static '/img/icons/right.svg' %}" alt="Перейти" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

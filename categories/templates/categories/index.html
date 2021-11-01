@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  {% if lang == 'ru' %}
+    {% for meta_tag in meta %}
+      <title>{{ meta_tag.title }}</title>
+      <meta name="description" content="{{ meta_tag.description }}" />
+      <meta name="keywords" content="{{ meta_tag.keywords }}" />
+    {% endfor %}
+    {% for html_tag in head_tags %}
+      {% autoescape off %} {{ html_tag.tag }}{% endautoescape %}
+    {% endfor %}
+  {% else %}
+    {% for meta_tag in meta %}
+      <title>{{ meta_tag.title_uz }}</title>
+      <meta name="description" content="{{ meta_tag.description }}" />
+      <meta name="keywords" content="{{ meta_tag.keywords }}" />
+    {% endfor %}
+    {% for html_tag in head_tags %}
+      {% autoescape off %} {{ html_tag.tag }}{% endautoescape %}
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static '/css/style.min.css' %}" />
+{% endblock %}
+{% block content %}
+  {% if success_sent %}
+    {% include 'modal_confirm.html' %}
+  {% endif %}
+  {% include 'header.html' %}
+  {% if lang == 'ru' %}
+    <main class="main">
+      <div class="goods">
+        <div class="container-lg">
+          {% for category in categories %}
+          <section class="paints">
+              <h2 class="products-title">
+                {{ category.title }}
+              </h2>
+              <div class="goods-cards">
+                {% for product_array in products %}
+                  {% for product in product_array %}
+                    {% if product.category.title == category.title %}
+                      {% if category.title == 'Огнезащитные краски' %}
+                        <a href='{{ product.get_url }}'>
+                          <div class="cards-item cards-item-paint">
+                            <div class="cards-item-title">
+                              {{ product.title }}
+                            </div>
+                            <div class="cards-item-img">
+                              <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                            </div>
+                          </div>
+                        </a>
+                      {% elif category.title == 'Огнезащитные составы' %}
+                        <a href='{{ product.get_url }}'>
+                          <div class="cards-item cards-item-mix">
+                            <div class="cards-item-title">
+                              {{ product.title }}
+                            </div>
+                            <div class="cards-item-img">
+                              <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                            </div>
+                          </div>
+                        </a>
+                      {% elif category.title == 'Огнеупорные трубы' %}
+                        <a href='{{ product.get_url }}'>
+                          <div class="cards-item cards-item-tubes">
+                            <div class="cards-item-title">
+                              {{ product.title }}
+                            </div>
+                            <div class="cards-item-img">
+                              <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                            </div>
+                          </div>
+                        </a>
+                      {% elif category.title == 'Огнеупорные фитинги' %}
+                        <!-- <a href=''> -->
+                          <div class="cards-item cards-item-tubes">
+                            <div class="cards-item-title">
+                              {{ product.title }}
+                            </div>
+                            <div class="cards-item-img">
+                              <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                            </div>
+                          </div>
+                       <!-- </a> -->
+                      {% elif category.title == 'Противопожарное оборудование' %}
+                        <!-- <a href=''> -->
+                          <div class="cards-item cards-item-alarm">
+                            <div class="cards-item-title">
+                              {{ product.title }}
+                            </div>
+                            <div class="cards-item-img">
+                              <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                            </div>
+                          </div>
+                       <!-- </a> -->
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+              </div>
+
+          </section>
+        {% endfor %}
+        </div>
+      </div>
+      {% include 'feedback.html' %}
+    </main>
+  {% elif lang == 'uz' %}
+    <main class="main">
+      <div class="goods">
+        <div class="container-lg">
+          {% for category in categories %}
+          <section class="paints">
+              <h2 class="products-title">
+                {{ category.title_uz }}
+              </h2>
+              <div class="goods-cards">
+                {% for product_array in products %}
+                  {% for product in product_array %}
+                    {% if product.category.title == category.title %}
+                      {% if category.title == 'Огнезащитные краски' %}
+                        <a href='{{ product.get_url_uz }}'>
+                          <div class="cards-item cards-item-paint">
+                            <div class="cards-item-title">
+                              {{ product.title_uz }}
+                            </div>
+                            <div class="cards-item-img">
+                              <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                            </div>
+                          </div>
+                        </a>
+                      {% elif category.title == 'Огнезащитные составы' %}
+                        <a href='{{ product.get_url_uz }}'>
+                          <div class="cards-item cards-item-mix">
+                            <div class="cards-item-title">
+                              {{ product.title_uz }}
+                            </div>
+                            <div class="cards-item-img">
+                              <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                            </div>
+                          </div>
+                        </a>
+                      {% elif category.title == 'Огнеупорные трубы' %}
+                        <!-- <a href='{{ product.get_url_uz }}'> -->
+                          <div class="cards-item cards-item-tubes">
+                            <div class="cards-item-title">
+                              {{ product.title_uz }}
+                            </div>
+                            <div class="cards-item-img">
+                              <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                            </div>
+                          </div>
+                        <!-- </a> -->
+                      {% elif category.title == 'Огнеупорные фитинги' %}
+                        <!-- <a href=''> -->
+                          <div class="cards-item cards-item-tubes">
+                            <div class="cards-item-title">
+                              {{ product.title_uz }}
+                            </div>
+                            <div class="cards-item-img">
+                              <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                            </div>
+                          </div>
+                       <!-- </a> -->
+                      {% elif category.title == 'Противопожарное оборудование' %}
+                        <!-- <a href=''> -->
+                          <div class="cards-item cards-item-alarm">
+                            <div class="cards-item-title">
+                              {{ product.title_uz }}
+                            </div>
+                            <div class="cards-item-img">
+                              <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                            </div>
+                          </div>
+                       <!-- </a> -->
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+              </div>
+
+          </section>
+        {% endfor %}
+        </div>
+      </div>
+      {% include 'feedback.html' %}
+    </main>
+  {% endif %}
+  {% include 'footer.html' %}
+{% endblock %}
+{% block scripts %}
+    <script src="{% static '/js/script.js' %}"></script>
+    <script src="{% static '/js/swiper-bundle.min.js' %}"></script>
+{% endblock %}

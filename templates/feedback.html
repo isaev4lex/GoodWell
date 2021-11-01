@@ -1,0 +1,56 @@
+{% load static %}
+{% if lang == 'ru' %}
+  <div class="contact">
+    <div class="container-md">
+      <div class="contact-inner">
+        <form class="contact-form" method="GET"> {% csrf_token %}
+          <div class="contact-form-wrapper">
+            <div class="contact-form-col">
+              <label for="name">Имя и Фамилия</label>
+              <input type="text" name="name" id="name" />
+              <label for="tel">Номер телефона</label>
+              <input type="tel" name="phone" id="tel" />
+              <label for="company">Название компании (Необязательно)</label>
+              <input type="text" name="company" id="company" />
+            </div>
+            <div class="contact-form-col">
+              <label for="message">Сообщение</label>
+              <textarea name="message" id="message"></textarea>
+            </div>
+          </div>
+          <button>
+            Отправить
+            <img src="{% static '/img/icons/send.webp' %}" alt="Отправить" />
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="contact">
+    <div class="container-md">
+      <div class="contact-inner">
+        <form class="contact-form" method="GET"> {% csrf_token %}
+          <div class="contact-form-wrapper">
+            <div class="contact-form-col">
+              <label for="name">Ism va Familiya</label>
+              <input type="text" name="name" id="name" />
+              <label for="tel">Telefon raqami</label>
+              <input type="tel" name="phone" id="tel" />
+              <label for="company">Kompaniya nomi (shart emas)</label>
+              <input type="text" name="company" id="company" />
+            </div>
+            <div class="contact-form-col">
+              <label for="message">Xabaringiz</label>
+              <textarea name="message" id="message"></textarea>
+            </div>
+          </div>
+          <button>
+            Yuborish
+            <img src="{% static '/img/icons/send.webp' %}" alt="Отправить" />
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endif %}

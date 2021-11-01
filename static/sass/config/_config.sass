@@ -1,0 +1,72 @@
+body
+  font-family: "ProximaNova"
+  background-color: #F8F8F8
+.page
+  display: flex
+  flex-direction: column
+  height: 100vh
+  overflow-x: hidden
+
+.container-lg
+  width: 100%
+  max-width: 1380px
+  margin: 0 auto
+  padding: 0 20px
+  position: relative
+
+.container-md
+  width: 100%
+  max-width: 1210px
+  margin: 0 auto
+  padding: 0 20px
+
+.blur
+  background: rgba(255, 255, 255, 0.6)
+  backdrop-filter: blur(36px)
+  border-radius: 1.25em
+  padding: 70px 0 60px
+
+.btn
+  display: flex
+  justify-content: flex-end
+  &-center
+    justify-content: center
+  &-left
+    justify-content: flex-start
+  a
+    display: flex
+    padding: 7px 20px
+    align-items: center
+    color: #FFF
+    background-color: #FF5868
+    font-size: 18px
+    border-radius: 1.219em
+    transition: all .3s ease-in-out
+    filter: drop-shadow(0px 4px 5px rgba(255, 88, 104, 0.5))
+    img
+      margin-left: 10px
+    &:hover
+      background-color: lighten(#FF5868, 5% )
+    &:active
+      background-color: darken(#FF5868, 5% )
+
+.wrapper
+  position: relative
+  z-index: 1
+
+.fire2
+  position: absolute
+  transform: rotateZ(20deg)
+  bottom: -380px
+  left: -110px
+  z-index: -1
+  user-select: none
+  pointer-events: none
+
+.smoke
+  position: absolute
+  z-index: -1
+  top: -280px
+  right: 0
+  user-select: none
+  pointer-events: none

@@ -1,0 +1,592 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  {% if lang == 'ru' %}
+    {% for meta_tag in meta %}
+      <title>{{ meta_tag.title }}</title>
+      <meta name="description" content="{{ meta_tag.description }}" />
+      <meta name="keywords" content="{{ meta_tag.keywords }}" />
+    {% endfor %}
+    {% for html_tag in head_tags %}
+      {% autoescape off %} {{ html_tag.tag }}{% endautoescape %}
+    {% endfor %}
+  {% else %}
+    {% for meta_tag in meta %}
+      <title>{{ meta_tag.title_uz }}</title>
+      <meta name="description" content="{{ meta_tag.description }}" />
+      <meta name="keywords" content="{{ meta_tag.keywords }}" />
+    {% endfor %}
+    {% for html_tag in head_tags %}
+      {% autoescape off %} {{ html_tag.tag }}{% endautoescape %}
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static '/css/style.min.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/swiper-bundle.min.css' %}" />
+{% endblock %}
+{% block content %}
+  {% if success_sent %}
+    {% include 'modal_confirm.html' %}
+  {% endif %}
+  {% include 'header.html' %}
+  {% if lang == 'ru' %}
+    <div class="slider">
+      <div class="container-lg">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            {% for banner in main_banners %}
+              <div class="swiper-slide">
+                <img
+                  src="{{ banner.img.url }}"
+                  alt="{{ banner.title }}"
+                  class="swiper-slide-banner"
+                />
+                <div class="swiper-desc">
+                  <div class="swiper-desc-title">
+                    {{ banner.title }}
+                  </div>
+                  <div class="swiper-desc-info">
+                    {{ banner.subtitle }}
+                  </div>
+                  <div class="btn btn-left">
+                    <a href="{{ banner.link }}">Перейти
+                      <img src="{% static '/img/icons/right.webp' %}" alt="Перейти" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      </div>
+
+    <main class="main">
+      <div class="wrapper">
+        <div class="blur">
+          {% for category in categories %}
+            <section class="paints">
+              <div class="container-md">
+                <h2 class="products-title">
+                  {{ category.title }}
+                </h2>
+                <div class="cards">
+                  {% for product_array in products %}
+                    {% for product in product_array|slice:3 %}
+                      {% if product.category.title == category.title %}
+                        {% if category.title == 'Огнезащитные краски' %}
+                          <a href="{{ product.get_url }}">
+                            <div class="cards-item cards-item-paint">
+                              <div class="cards-item-title">
+                                {{ product.title }}
+                              </div>
+                              <div class="cards-item-img">
+                                <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                              </div>
+                            </div>
+                          </a>
+                        {% elif category.title == 'Огнезащитные составы' %}
+                          <a href="{{ product.get_url }}">
+                            <div class="cards-item cards-item-mix">
+                              <div class="cards-item-title">
+                                {{ product.title }}
+                              </div>
+                              <div class="cards-item-img">
+                                <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                              </div>
+                            </div>
+                          </a>
+                        {% elif category.title == 'Огнеупорные трубы' %}
+                          <a href="{{ product.get_url }}">
+                            <div class="cards-item cards-item-tubes">
+                              <div class="cards-item-title">
+                                {{ product.title }}
+                              </div>
+                              <div class="cards-item-img">
+                                <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                              </div>
+                            </div>
+                          </a>
+                        {% elif category.title == 'Противопожарное оборудование' %}
+                          <a href="{{ product.get_url }}">
+                            <div class="cards-item cards-item-alarm">
+                              <div class="cards-item-title">
+                                {{ product.title }}
+                              </div>
+                              <div class="cards-item-img">
+                                <img src="{{ product.img.url }}" alt="{{ product.title }}" />
+                              </div>
+                            </div>
+                          </a>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                  {% endfor %}
+                </div>
+                <div class="btn">
+                  {% if lang == 'ru' %}
+                    <a href="{{ category.get_url }}">
+                  {% else %}
+                    <a href="{{ category.get_url_uz }}">
+                  {% endif %}
+                    Перейти
+  <!--                  {{ category.get_url }}-->
+                    <img src="{% static '/img/icons/right.webp' %}" alt="Перейти" />
+                  </a>
+                </div>
+              </div>
+            </section>
+          {% endfor %}
+          <section class="directions">
+            <div class="container-lg">
+              <h2 class="products-title">Основные направления</h2>
+              <div class="directions-wrapper">
+                <div class="directions-item">
+                  <img
+                    src="{% static '/img/directions/1.webp' %} "
+                    alt=""
+                    class="directions-item-img"
+                  />
+                  <div class="directions-item-title">
+                    Проведение мероприятий по усилению и защите конструкций
+                  </div>
+                </div>
+                <div class="directions-item">
+                  <img
+                    src="{% static '/img/directions/2.webp' %} "
+                    alt=""
+                    class="directions-item-img"
+                  />
+                  <div class="directions-item-title">
+                    Монтаж противопожарных преград
+                  </div>
+                </div>
+                <div class="directions-item">
+                  <img
+                    src="{% static '/img/directions/3.webp' %} "
+                    alt=""
+                    class="directions-item-img"
+                  />
+                  <div class="directions-item-title">
+                    Установка охранно-пожарной сигнализации
+                  </div>
+                </div>
+                <div class="directions-item">
+                  <img
+                    src="{% static '/img/directions/4.webp' %} "
+                    alt=""
+                    class="directions-item-img"
+                  />
+                  <div class="directions-item-title">
+                    Установка систем наблюдения
+                  </div>
+                </div>
+              </div>
+              <div class="btn btn-center">
+                <a href="{% url 'services' %}">
+                  Перейти
+                  <img src="{% static '/img/icons/right.webp' %}" alt="Перейти" />
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+        <img src="{% static '/img/decor/fire2.png' %}" alt="" class="fire2" />
+      </div>
+
+      <section class="partners">
+        <div class="products-title">Нам доверяют</div>
+        <div class="container-lg">
+          <div class="partners-inner">
+            {% for partner in partners %}
+              <div class="partners-item">
+                <img
+                  src="{{ partner.img.url }} "
+                  alt="{{ partner.title }}"
+                  class="partners-item-img"
+                />
+              </div>
+            {% endfor %}
+
+          </div>
+          <div class="btn btn-center">
+            <a href="{% url 'partners' %}">
+              Перейти
+              <img src="{% static '/img/icons/right.webp' %}" alt="Перейти" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="video">
+        <div class="blur">
+          <div class="container-lg">
+            <div class="products-title">О компании</div>
+            <div class="video-inner">
+              <div class="video-item">
+                <div class="video-utube">
+                  <iframe width="560" 
+                  height="315" 
+                  src="https://www.youtube.com/embed/1GRFwCHBpvM" 
+                  title="YouTube video player" 
+                  frameborder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen></iframe>
+                </div>
+                <div class="video-desc">
+                  <div class="video-title">
+                    По  оценкам  специалистов,  около  40%  трубопроводов  для  систем пожарной безопасности безопасности в критическом состоянии,
+                    нуждаются в замене или капитальном ремонте, так как они изготовлены из стали, а срок службы стальных систем не превышает 10-15 лет.
+                  </div>
+                  <div class="video-txt">
+                    <p>
+                      Один из главных вопросов в области пожарной безопасности: Какие материалы и решения допустимо использовать для пожарных трубопроводов?
+                    </p>
+                    <p>
+                      Технический прогресс не стоит на месте, и появляются новые материалы, обладающие более высокими техническими характеристиками. 
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="video-item">
+                <div class="video-utube">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/volhpPiRW88"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-desc">
+                  <div class="video-title">
+                    Система тм AntiFireFireCup- инновационная система водяных
+                    и пенных спринклерных водозаполненных установок пожаротушения.
+                  </div>
+                  <div class="video-txt">
+                    <p>
+                      AntiFireFireCup - многослойная 
+                      труба, высокая стойкость к вос пламенению которой обеспечена 
+                      за счет уникального компаунда 
+                      FireResistance, рассчитанного на 
+                      особые требования в области 
+                      пожарной безопасности.  Трехслойное строение с усилен ным средним слоем из стеклово локна обеспечивает трубы AntiFire высокими эксплуатационными характеристиками. Внутренняя поверхность трубы не 
+                      подвержена коррозии, обладает 
+                      абразивной и химической устой чивостью и высокой пропускной 
+                      способностью.
+                    </p>
+                    <br>
+                    <p>
+                      Продукция соответствует жестким 
+требованиям в области пожарной 
+безопасности, предъявляемым 
+к автоматическим установкам 
+водяного пожаротушения 
+(АУВПТ).
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="btn btn-center">
+              <a href="{% url 'about' %}"
+                >Перейти
+                <img src="{% static '/img/icons/right.webp' %}" alt="Перейти" />
+              </a>
+            </div>
+          </div>
+        </div>
+        <img src="{% static '/img/decor/smoke.webp' %}" alt="ДЫМ" class="smoke" />
+      </section>
+      {% include 'feedback.html' %}
+    </main>
+  {% elif lang == 'uz' %}
+    <div class="slider">
+      <div class="container-lg">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            {% for banner in main_banners %}
+              <div class="swiper-slide">
+                <img
+                  src="{{ banner.img.url }}"
+                  alt="{{ banner.title_uz }}"
+                  class="swiper-slide-banner"
+                />
+                <div class="swiper-desc">
+                  <div class="swiper-desc-title">
+                    {{ banner.title_uz }}
+                  </div>
+                  <div class="swiper-desc-info">
+                    {{ banner.subtitle_uz }}
+                  </div>
+                  <div class="btn btn-left">
+                    <a href="{{ banner.link }}uz">Batafsil
+                      <img src="{% static '/img/icons/right.webp' %}" alt="Перейти" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+
+    <main class="main">
+      <div class="wrapper">
+        <div class="blur">
+          {% for category in categories %}
+            <section class="paints">
+              <div class="container-md">
+                <h2 class="products-title">
+                  {{ category.title_uz }}
+                </h2>
+                <div class="cards">
+                  {% for product_array in products %}
+                    {% for product in product_array|slice:3 %}
+                      {% if product.category.title == category.title %}
+                        {% if category.title == 'Огнезащитные краски' %}
+                          <a href="{{ product.get_url_uz }}">
+                            <div class="cards-item cards-item-paint">
+                              <div class="cards-item-title">
+                                {{ product.title_uz }}
+                              </div>
+                              <div class="cards-item-img">
+                                <img src="{{ product.img.url }}" alt="{{ product.title_uz }}" />
+                              </div>
+                            </div>
+                          </a>
+                        {% elif category.title == 'Огнезащитные составы' %}
+                          <a href="{{ product.get_url_uz }}">
+                            <div class="cards-item cards-item-mix">
+                              <div class="cards-item-title">
+                                {{ product.title_uz }}
+                              </div>
+                              <div class="cards-item-img">
+                                <img src="{{ product.img.url }}" alt="{{ product.title_uz }}" />
+                              </div>
+                            </div>
+                          </a>
+                        {% elif category.title == 'Огнеупорные трубы' %}
+                          <a href="{{ product.get_url_uz }}">
+                            <div class="cards-item cards-item-tubes">
+                              <div class="cards-item-title">
+                                {{ product.title_uz }}
+                              </div>
+                              <div class="cards-item-img">
+                                <img src="{{ product.img.url }}" alt="{{ product.title_uz }}" />
+                              </div>
+                            </div>
+                          </a>
+                        {% elif category.title == 'Противопожарное оборудование' %}
+                          <a href="{{ product.get_url_uz }}">
+                            <div class="cards-item cards-item-alarm">
+                              <div class="cards-item-title">
+                                {{ product.title_uz }}
+                              </div>
+                              <div class="cards-item-img">
+                                <img src="{{ product.img.url }}" alt="{{ product.title_uz }}" />
+                              </div>
+                            </div>
+                          </a>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                  {% endfor %}
+                </div>
+                <div class="btn">
+                    <a href="{{ category.get_url_uz }}">
+                    Batafsil
+  <!--                  {{ category.get_url }}-->
+                    <img src="{% static '/img/icons/right.webp' %}" alt="Перейти" />
+                  </a>
+                </div>
+              </div>
+            </section>
+          {% endfor %}
+          <section class="directions">
+            <div class="container-lg">
+              <h2 class="products-title">Asosiy yo'nalishlarimiz</h2>
+              <div class="directions-wrapper">
+                <div class="directions-item">
+                  <img
+                    src="{% static '/img/directions/1.webp' %} "
+                    alt=""
+                    class="directions-item-img"
+                  />
+                  <div class="directions-item-title">
+                    Tuzilmalarni mustahkamlash va himoya qilish bo'yicha tadbirlarni oʻtkazish
+                  </div>
+                </div>
+                <div class="directions-item">
+                  <img
+                    src="{% static '/img/directions/2.webp' %} "
+                    alt=""
+                    class="directions-item-img"
+                  />
+                  <div class="directions-item-title">
+                    Yong'inga qarshi to'siqlarni o'rnatish
+                  </div>
+                </div>
+                <div class="directions-item">
+                  <img
+                    src="{% static '/img/directions/3.webp' %} "
+                    alt=""
+                    class="directions-item-img"
+                  />
+                  <div class="directions-item-title">
+                    Xavfsizlik va yong'in signalizatsiya tizimini o'rnatish
+                  </div>
+                </div>
+                <div class="directions-item">
+                  <img
+                    src="{% static '/img/directions/4.webp' %} "
+                    alt=""
+                    class="directions-item-img"
+                  />
+                  <div class="directions-item-title">
+                    Kuzatuv tizimlarini o'rnatish
+                  </div>
+                </div>
+              </div>
+              <div class="btn btn-center">
+                <a href="{% url 'services' %}">
+                  Batafsil
+                  <img src="{% static '/img/icons/right.webp' %}" alt="Перейти" />
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+        <img src="{% static '/img/decor/fire2.png' %}" alt="" class="fire2" />
+      </div>
+
+      <section class="partners">
+        <div class="products-title">Bizga ishonch</div>
+        <div class="container-lg">
+          <div class="partners-inner">
+            {% for partner in partners %}
+              <div class="partners-item">
+                <img
+                  src="{{ partner.img.url }} "
+                  alt="{{ partner.title }}"
+                  class="partners-item-img"
+                />
+              </div>
+            {% endfor %}
+
+          </div>
+          <div class="btn btn-center">
+            <a href="{% url 'partners' %}">
+              Batafsil
+              <img src="{% static '/img/icons/right.webp' %}" alt="Перейти" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="video">
+        <div class="blur">
+          <div class="container-lg">
+            <div class="products-title">Kompaniyamiz haqida</div>
+            <div class="video-inner">
+              <div class="video-item">
+                <div class="video-utube">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/SxBenU4FRJ8"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-desc">
+                  <div class="video-title">
+                    Товарищи! постоянный количественный рост и сфера нашей активности
+                    требуют определения и уточнения дальнейших направлений развития.
+                  </div>
+                  <div class="video-txt">
+                    <p>
+                      Равным образом постоянное информационно-пропагандистское
+                      обеспечение нашей деятельности обеспечивает широкому кругу
+                      (специалистов) участие в формировании модели развития. Равным
+                      образом начало повседневной работы по формированию позиции
+                      представляет собой интересный эксперимент проверки дальнейших
+                      направлений развития. Равным образом постоянное
+                      информационно-пропагандистское обеспечение нашей деятельности
+                      влечет за собой процесс внедрения и модернизации дальнейших
+                      направлений развития.
+                    </p>
+                    <p>
+                      Равным образом укрепление и развитие структуры обеспечивает
+                      широкому кругу (специалистов) участие в формировании дальнейших
+                      направлений развития.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="video-item">
+                <div class="video-utube">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/volhpPiRW88"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-desc">
+                  <div class="video-title">
+                    Равным образом постоянное нашей деятельности обеспечивает широкому
+                    кругу (специалистов) участие в формировании модели развития.
+                  </div>
+                  <div class="video-txt">
+                    <p>
+                      Товарищи! постоянный количественный рост и сфера нашей
+                      активности требуют определения и уточнения дальнейших
+                      направлений развития. Равным образом постоянное
+                      информационно-пропагандистское обеспечение нашей деятельности
+                      обеспечивает широкому кругу (специалистов) участие в
+                      формировании модели развития. Равным образом начало повседневной
+                      работы по формированию позиции представляет собой интересный
+                      эксперимент проверки дальнейших направлений развития. Равным
+                      образом постоянное информационно-пропагандистское обеспечение
+                      нашей деятельности влечет за собой процесс внедрения и
+                      модернизации дальнейших направлений развития.
+                    </p>
+                    <p>
+                      Значимость этих проблем настолько очевидна, что укрепление и
+                      развитие структуры позволяет оценить значение модели развития.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="btn btn-center">
+              <a href="{% url 'about' %}">Batafsil
+                <img src="{% static '/img/icons/right.webp' %}" alt="Перейти" />
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <img src="{% static '/img/decor/smoke.webp' %}" alt="ДЫМ" class="smoke" />
+      </section>
+      {% include 'feedback.html' %}
+    </main>
+  {% endif %}
+  {% include 'footer.html' %}
+{% endblock %}
+{% block scripts %}
+    <script src="{% static '/js/script.js' %}"></script>
+    <script src="{% static '/js/swiper-bundle.min.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  {% if lang == 'ru' %}
+    {% for meta_tag in meta %}
+      <title>{{ meta_tag.title }}</title>
+      <meta name="description" content="{{ meta_tag.description }}" />
+      <meta name="keywords" content="{{ meta_tag.keywords }}" />
+    {% endfor %}
+    {% for html_tag in head_tags %}
+      {% autoescape off %} {{ html_tag.tag }}{% endautoescape %}
+    {% endfor %}
+  {% else %}
+    {% for meta_tag in meta %}
+      <title>{{ meta_tag.title_uz }}</title>
+      <meta name="description" content="{{ meta_tag.description }}" />
+      <meta name="keywords" content="{{ meta_tag.keywords }}" />
+    {% endfor %}
+    {% for html_tag in head_tags %}
+      {% autoescape off %} {{ html_tag.tag }}{% endautoescape %}
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static '/css/style.min.css' %}" />
+{% endblock %}
+{% block content %}
+  {% include 'header.html' %}
+  <main class="main">
+    <section class="partners">
+      <div class="products-title">Нам доверяют</div>
+      <div class="container-lg">
+        <div class="partners-inner">
+          {% for partner in partners %}
+            <div class="partners-item">
+              <img
+                src="{{ partner.img.url }} "
+                alt="{{ partner.title }}"
+                class="partners-item-img"
+              />
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <div class="partners-desc">
+      <div class="container-lg">
+        <div class="partners-text">
+          <p>
+            Равным образом постоянное информационно-пропагандистское
+            обеспечение нашей деятельности обеспечивает широкому кругу
+            (специалистов) участие в формировании модели развития. Равным
+            образом начало повседневной работы по формированию позиции
+            представляет собой интересный эксперимент проверки дальнейших
+            направлений развития. Равным образом постоянное
+            информационно-пропагандистское обеспечение нашей деятельности
+            влечет за собой процесс внедрения и модернизации дальнейших
+            направлений развития.
+          </p>
+          <p>
+            Равным образом укрепление и развитие структуры обеспечивает
+            широкому кругу (специалистов) участие в формировании дальнейших
+            направлений развития.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+  {% include 'footer.html' %}
+{% endblock %}
+{% block scripts %}
+  <script src="{% static '/js/script.js' %}"></script>
+{% endblock %}

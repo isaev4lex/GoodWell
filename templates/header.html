@@ -1,0 +1,137 @@
+{% load static %}
+{% if lang == 'ru' %}
+  <header class="header">
+    <div class="container-lg">
+      <div class="header-inner">
+        <div class="header-logo">
+          <a href="{% url 'home' %}">
+            <img src="{% static '/img/logo-white.webp' %}" alt="Логотип" />
+          </a>
+        </div>
+      {% include 'mobile.html' %}
+        <nav class="header-nav">
+          <ul class="header-nav-list">
+            <li class="header-nav-item">
+              <a href="{% url 'home' %}" class="header-nav-link">Главная</a>
+            </li>
+            <li class="header-nav-item">
+              <div class="header-nav-link">
+                Продукция
+                <img src="{% static '/img/icons/down-arrow.svg' %}" alt="" />
+              </div>
+              <ul class="submenu">
+                <div class="submenu-window">
+                  <a href="{% url 'categories' 'paints' %}" class="submenu-link">
+                    <li class="submenu-item">Огнезащитные краски</li>
+                  </a>
+                  <a href="{% url 'categories' 'mixes' %}" class="submenu-link">
+                    <li class="submenu-item">Огнезащитные составы</li>
+                  </a>
+                  <a href="{% url 'categories' 'tubes' %}" class="submenu-link">
+                    <li class="submenu-item">Трубы и фитинги</li>
+                  </a>
+                  <a href="{% url 'categories' 'alarms' %}" class="submenu-link">
+                    <li class="submenu-item">Оборудование</li>
+                  </a>
+                </div>
+              </ul>
+            </li>
+            <li class="header-nav-item">
+              <a href="{% url 'services' %}" class="header-nav-link">Услуги</a>
+            </li>
+            <li class="header-nav-item">
+              <a href="{% url 'partners' %}" class="header-nav-link">Нам доверяют</a>
+            </li>
+            <li class="header-nav-item">
+              <a href="{% url 'contacts' %}" class="header-nav-link">Контакты</a>
+            </li>
+            <li class="header-nav-item">
+              <a href="{% url 'about' %}" class="header-nav-link">О компании</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="header-lang">
+          {% if slug %}
+            <a href="{% url page slug %}" class="header-lang header-lang-active">ru</a>
+            <a href="{% url page slug 'uz' %}">uz</a>
+          {% else %}
+            <a href="{% url page %}" class="header-lang header-lang-active">ru</a>
+            <a href="{% url page 'uz' %}">uz</a>
+          {% endif %}
+        </div>
+        <div class="header-number">
+          <a href="tel:{{ contact_info.phones|first }}">{{ contact_info.phones|first }}</a>
+        </div>
+      </div>
+    </div>
+  </header>
+{% else %}
+    <header class="header">
+    <div class="container-lg">
+      <div class="header-inner">
+        <div class="header-logo">
+          <a href="{% url 'home' 'uz' %}">
+            <img src="{% static '/img/logo-white.webp' %}" alt="Логотип" />
+          </a>
+        </div>
+      {% include 'mobile.html' %}
+        <nav class="header-nav">
+          <ul class="header-nav-list">
+            <li class="header-nav-item">
+              <a href="{% url 'home' 'uz' %}" class="header-nav-link">Bosh sahifa</a>
+            </li>
+            <li class="header-nav-item">
+<!--              <a href="" class="header-nav-link">Mahsulotlar</a>-->
+            </li>
+            <li class="header-nav-item">
+              <div class="header-nav-link">
+                Mahsulotlar
+                <img src="{% static '/img/icons/down-arrow.svg' %}" alt="" />
+              </div>
+              <ul class="submenu">
+                <div class="submenu-window">
+                  <a href="{% url 'categories' 'paints' 'uz' %}" class="submenu-link">
+                    <li class="submenu-item">Yong'indan saqlaydigan bo'yoqlar</li>
+                  </a>
+                  <a href="{% url 'categories' 'mixes' 'uz' %}" class="submenu-link">
+                    <li class="submenu-item">Yongʻindan saqlaydigan moddalar</li>
+                  </a>
+                  <a href="{% url 'categories' 'tubes' 'uz' %}" class="submenu-link">
+                    <li class="submenu-item">Quvurlar va fitinglar</li>
+                  </a>
+                  <a href="{% url 'categories' 'alarms' 'uz' %}" class="submenu-link">
+                    <li class="submenu-item">Uskunalar</li>
+                  </a>
+                </div>
+              </ul>
+            </li>
+            <li class="header-nav-item">
+              <a href="{% url 'services' 'uz' %}" class="header-nav-link">Xizmatlar</a>
+            </li>
+            <li class="header-nav-item">
+              <a href="{% url 'partners' 'uz' %}" class="header-nav-link">Bizning xamkorlarimiz</a>
+            </li>
+            <li class="header-nav-item">
+              <a href="{% url 'contacts' 'uz' %}" class="header-nav-link">Kontaktlar</a>
+            </li>
+            <li class="header-nav-item">
+              <a href="{% url 'about' 'uz' %}" class="header-nav-link">Kompaniyamiz haqida</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="header-lang">
+          {% if slug %}
+            <a href="{% url page slug %}">ru</a>
+            <a href="{% url page slug 'uz' %}" class="header-lang header-lang-active">uz</a>
+          {% else %}
+            <a href="{% url page %}">ru</a>
+            <a href="{% url page 'uz' %}" class="header-lang header-lang-active">uz</a>
+          {% endif %}
+        </div>
+        <div class="header-number">
+          <a href="tel:{{ contact_info.phones|first }}">{{ contact_info.phones|first }}</a>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endif %}

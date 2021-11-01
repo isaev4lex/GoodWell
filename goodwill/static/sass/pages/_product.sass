@@ -1,0 +1,132 @@
+.product
+  padding: 30px 0
+  &-window
+    display: flex
+    border-radius: 1.25em
+    background-color: #fff
+    box-shadow: 0px 8px 22px rgba(0, 0, 0, 0.08)
+    overflow: hidden
+  &-preview
+    width: 50%
+    display: flex
+    justify-content: center
+    padding: 20px
+    &-img
+      display: flex
+      align-items: center
+      justify-content: center
+      width: 100%
+    &-gallery
+      display: flex
+      flex-direction: column
+      gap: 20px
+      overflow-y: auto
+      overflow-x: hidden
+      height: 450px
+      padding-right: 30px
+    &-item
+      padding: 16px 12px
+      border-radius: 1.25em
+      width: 100px
+      height: 100px
+      border: 3px solid #DCDCDC
+      cursor: pointer
+      img
+        width: 100%
+        height: auto
+      &__active
+        border: 3px solid #3C5CCD
+  &-desc
+    width: 50%
+    padding: 40px 20px 20px
+    background-color: #3C5CCD
+    &-top
+      display: flex
+      justify-content: space-between
+      color: #FFF
+      font-weight: 700
+      margin-bottom: 35px
+    &-title
+      font-size: 30px
+      width: 100%
+      max-width: 315px
+    &-price
+      font-size: 24px
+      margin-top: auto
+  &-info
+    background-color: #fff
+    border-radius: 0.438em
+    padding: 25px
+    color: #888888
+    font-weight: 600
+    font-size: 18px
+    &-item
+      display: flex
+      align-items: center
+    &-title
+      width: 50%
+      border-right: 2px solid #D9D9D9
+      padding: 15px 15px 15px 0px
+    &-desc
+      width: 50%
+      padding: 15px 0px 15px 25px
+
+.characteristics
+  &-title
+    text-align: center
+    color: #3C5CCD
+    font-weight: 700
+    font-size: 22px
+    margin-bottom: 30px
+  &-inner
+    display: flex
+    background-color: #fff
+    border-radius: 1.25em
+    padding: 20px 0
+    box-shadow: 0px 8px 22px rgba(0, 0, 0, 0.08)
+  &-item
+    border-right: 2px solid #D9D9D9
+    padding-right: 15px
+    padding-left: 15px
+    width: 100%
+    max-width: 346px
+    &:last-child
+      border-right: none
+    &-title
+      font-size: 18px
+      color: #3C5CCD
+      font-weight: 600
+      text-align: center
+      width: 100%
+      max-width: 192px
+      margin: 0 auto 25px
+  &-info
+    &-desc
+      color: #3C5CCD
+      padding: 8px 0
+      background-color: #F8F8F8
+      border-radius: 0.375em
+      text-align: center
+      margin-bottom: 10px
+      &:last-child
+        margin-bottom: 0
+
+.description
+  padding: 45px 0 45px
+  &-inner
+    display: flex
+    justify-content: space-between
+    flex-wrap: wrap
+    gap: 30px
+  &-item
+    width: 100%
+    max-width: 575px
+  &-title
+    font-weight: 700
+    font-size: 22px
+    color: #3C5CCD
+    margin-bottom: 30px
+  &-text
+    font-size: 18px
+    color: #3C5CCD
+    line-height: 1.3
